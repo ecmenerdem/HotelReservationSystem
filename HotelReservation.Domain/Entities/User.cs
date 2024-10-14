@@ -11,7 +11,7 @@ namespace HotelReservation.Domain.Entities
     {
         public User()
         {
-            Reservations=new List<Reservation>();
+            Reservations=new HashSet<Reservation>();
         }
         public string FirstName { get; set; }
         public string LastName { get; set; }

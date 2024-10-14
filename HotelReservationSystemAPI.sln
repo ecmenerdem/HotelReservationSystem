@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelReservation.Domain", "HotelReservation.Domain\HotelReservation.Domain.csproj", "{7F83D079-36DD-46BF-9EB0-4AA546403F57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelReservation.Domain", "HotelReservation.Domain\HotelReservation.Domain.csproj", "{7F83D079-36DD-46BF-9EB0-4AA546403F57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelReservation.Infrastructure", "HotelReservation.Infrastructure\HotelReservation.Infrastructure.csproj", "{FBE7D0B1-C4E4-4CF4-9F8F-56C3373092B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelReservation.Infrastructure", "HotelReservation.Infrastructure\HotelReservation.Infrastructure.csproj", "{FBE7D0B1-C4E4-4CF4-9F8F-56C3373092B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelReservation.WebAPI", "HotelReservation.WebAPI\HotelReservation.WebAPI.csproj", "{2053D400-EA42-4334-9973-7E92E25B6DC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelReservation.WebAPI", "HotelReservation.WebAPI\HotelReservation.WebAPI.csproj", "{2053D400-EA42-4334-9973-7E92E25B6DC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelReservation.Application", "HotelReservation.Application\HotelReservation.Application.csproj", "{00E036B8-FCAB-4B4E-A364-0A0E2F5311BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelReservation.Application", "HotelReservation.Application\HotelReservation.Application.csproj", "{00E036B8-FCAB-4B4E-A364-0A0E2F5311BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
