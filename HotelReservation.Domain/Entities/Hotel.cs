@@ -17,7 +17,7 @@ public class Hotel : AuditableEntity
     public string Email { get; set; }
 
     // Navigation Properties
-    public IEnumerable<Room> Rooms { get; private set; }
+    public IEnumerable<Room> Rooms { get; set; }
 
    
 }
