@@ -4,21 +4,23 @@ namespace HotelReservation.Domain.Entities;
 
 public class Room : AuditableEntity
 {
+
     public Room()
     {
+        RoomImages = new HashSet<RoomImage>();
         Reservations = new HashSet<Reservation>();
-        RoomImages = new HashSet<RoomImage>(); // Resimlerle ilişkiyi initialize ediyoruz
     }
 
     public int HotelId { get; set; }
-    public string RoomType { get; set; }
+    public string RoomNumber { get; set; }
     public int Capacity { get; set; }
     public decimal PricePerNight { get; set; }
-    public bool IsAvailable { get; set; }
+    public string Description { get; set; }
 
+    // Navigation Properties
     public Hotel Hotel { get; set; }
-    public ICollection<Reservation> Reservations { get; set; }
+    public IEnumerable<RoomImage> RoomImages { get; private set; }
+    public IEnumerable<Reservation> Reservations { get; private set; }
 
-    // Navigation property for Room Images
-    public IEnumerable<RoomImage> RoomImages { get; set; } // Oda resimleri
+    
 }

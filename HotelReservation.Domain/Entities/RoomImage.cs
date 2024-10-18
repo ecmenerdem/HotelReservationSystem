@@ -7,14 +7,12 @@ using System.Threading.Tasks;
 
 namespace HotelReservation.Domain.Entities
 {
-    public class RoomImage: BaseEntity
+    public class RoomImage : AuditableEntity
     {
-        public int Id { get; set; }
-        public int RoomId { get; set; } // Odayla ilişki
-        public string ImagePath { get; set; } // Resim dosya yolu
-        public string Description { get; set; } // Resim açıklaması (opsiyonel)
+        public int RoomId { get; set; }
+        public string ImageUrl { get; set; }
 
         // Navigation Property
-        public Room Room { get; set; } // Oda ile ilişkili
+        public Room Room { get; set; }
     }
 }
