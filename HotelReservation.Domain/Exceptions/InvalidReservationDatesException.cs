@@ -8,8 +8,10 @@ namespace HotelReservation.Domain.Exceptions
 {
     public class InvalidReservationDatesException : Exception
     {
-        public InvalidReservationDatesException(): base("Giriş Tarihi Çıkış Tarihinden Önce Olmalıdır.")
+        public InvalidReservationDatesException()
+            : base("Giriş tarihi, çıkış tarihinden önce olmalıdır.")
         {
         }
+       
     }
 }
