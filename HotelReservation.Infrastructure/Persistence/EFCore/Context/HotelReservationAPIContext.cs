@@ -15,7 +15,7 @@ namespace HotelReservation.Infrastructure.Persistence.EFCore.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("data source=.\\ZRVSQL2008;initial catalog=Shopping234DB;integrated security=True; TrustServerCertificate=true");
+                optionsBuilder.UseSqlServer("data source=EERDEM\\SQLEXPRESS;initial catalog=HotelReservationDB;integrated security=True; TrustServerCertificate=true");
 
             }
             //if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")=="Development")

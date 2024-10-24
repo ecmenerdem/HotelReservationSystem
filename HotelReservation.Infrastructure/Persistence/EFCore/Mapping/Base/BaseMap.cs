@@ -20,12 +20,7 @@ namespace HotelReservation.Infrastructure.Persistence.EFCore.Mapping.Base
             // AuditableEntity'den gelen ortak alanlar için konfigurasyon
             builder.Property(q => q.IsActive).HasDefaultValue(true);
             builder.Property(q => q.IsDeleted).HasDefaultValue(false);
-            builder.Property(q => q.AddedTime).IsRequired();
-            builder.Property(q => q.AddedUser).IsRequired();
-            builder.Property(q => q.AddedIP).HasMaxLength(50);
-            builder.Property(q => q.UpdateTime).IsRequired(false);
-            builder.Property(q => q.UpdateUser).IsRequired(false);
-            builder.Property(q => q.UpdatedIP).HasMaxLength(50);
+         
         }
     }
 }

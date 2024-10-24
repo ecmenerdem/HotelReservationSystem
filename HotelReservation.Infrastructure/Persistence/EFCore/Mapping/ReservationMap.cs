@@ -34,7 +34,7 @@ namespace HotelReservation.Infrastructure.Persistence.EFCore.Mapping
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(res => res.Room)
-                .WithMany()
+                .WithMany(q=>q.Reservations)
                 .HasForeignKey(res => res.RoomId)
                 .OnDelete(DeleteBehavior.Cascade);
         }

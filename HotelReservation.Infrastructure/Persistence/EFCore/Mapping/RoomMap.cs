@@ -32,11 +32,11 @@ namespace HotelReservation.Infrastructure.Persistence.EFCore.Mapping
             builder.Property(r => r.IsAvailable)
                 .IsRequired();
 
-            // Room - Reservation ilişkisi
-            builder.HasMany(r => r.Reservations)
-                .WithOne(res => res.Room)
-                .HasForeignKey(res => res.RoomId)
-                .OnDelete(DeleteBehavior.Cascade);
+            //// Room - Reservation ilişkisi
+            //builder.HasMany(r => r.Reservations)
+            //    .WithOne(res => res.Room)
+            //    .HasForeignKey(res => res.RoomId)
+            //    .OnDelete(DeleteBehavior.Cascade);
 
             // Room - RoomImage ilişkisi
             builder.HasMany(r => r.RoomImages)
