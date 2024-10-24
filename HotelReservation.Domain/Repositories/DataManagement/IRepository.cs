@@ -16,7 +16,7 @@ namespace HotelReservation.Domain.Repositories.DataManagement
 
         Task<IQueryable<T>> GetAllAsyncAsNoTracking(Expression<Func<T, bool>> filter = null, params string[] includeProperties);
         ValueTask AddAsync(T entity);/*Insert Edilen Kaydı Geri Döndürmek İçin "void" yapmadık.*/
-        Task UpdateAsync(T entity);
-        Task RemoveAsync(T entity);
+        void Update(T entity);
+        void Remove(T entity);
     }
 }
