@@ -17,6 +17,8 @@ public class Room : AuditableEntity
     public decimal PricePerNight { get; set; }
     public bool IsAvailable { get; set; }
 
+    public string Description { get; set; }
+
     // Navigation Properties
     public Hotel Hotel { get; set; }
     public IEnumerable<RoomImage> RoomImages { get; set; }
