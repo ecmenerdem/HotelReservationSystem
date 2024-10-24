@@ -20,15 +20,15 @@ namespace HotelReservation.Infrastructure.Persistence.EFCore.Mapping
 
             builder.Property(u => u.FirstName)
                 .IsRequired()
-                .HasMaxLength(50);
+                .HasMaxLength(100);
 
             builder.Property(u => u.LastName)
                 .IsRequired()
-                .HasMaxLength(50);
+                .HasMaxLength(100);
 
             builder.Property(u => u.Username)
                 .IsRequired()
-                .HasMaxLength(50);
+                .HasMaxLength(100);
 
             builder.Property(u => u.Email)
                 .IsRequired()

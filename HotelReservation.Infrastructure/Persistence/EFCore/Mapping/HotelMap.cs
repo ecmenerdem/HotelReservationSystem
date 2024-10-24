@@ -24,7 +24,7 @@ namespace HotelReservation.Infrastructure.Persistence.EFCore.Mapping
 
             builder.Property(h => h.Address)
                 .IsRequired()
-                .HasMaxLength(250);
+                .HasMaxLength(500);
 
             // Hotel - Room ilişkisi
             builder.HasMany(h => h.Rooms)

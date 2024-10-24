@@ -20,7 +20,7 @@ namespace HotelReservation.Infrastructure.Persistence.EFCore.Mapping
 
             builder.Property(r => r.RoomType)
                 .IsRequired()
-                .HasMaxLength(50);
+                .HasMaxLength(100);
 
             builder.Property(r => r.Capacity)
                 .IsRequired();
