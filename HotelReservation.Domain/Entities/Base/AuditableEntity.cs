@@ -18,8 +18,6 @@ namespace HotelReservation.Domain.Entities.Base
         public DateTime? UpdateTime { get; set; }
         public string? UpdatedIP { get; set; }
 
-        // Aktiflik ve silinme durumu
-        public bool IsActive { get; set; } = true;
-        public bool IsDeleted { get; set; } = false;
+       
     }
 }
