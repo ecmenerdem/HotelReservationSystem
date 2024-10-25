@@ -57,15 +57,15 @@ namespace HotelReservation.Application.UseCases.User
 
         public async Task<UserDTO> LoginAsync(string username, string password)
         {
-            var user = await _uow.UserRepository.GetAsync(x => x.Username == username && x.Password == _passwordHasher.HashPassword(password));
+            var userr = await _uow.UserRepository.GetAsync(x => x.Username == username && x.Password == _passwordHasher.HashPassword(password));
 
-            if (user is null)
+            if (userr is null)
             {
                 throw new UserNotFoundException();
             }
             else
             {
-                return _mapper.Map<UserDTO>(user);
+                return _mapper.Map<UserDTO>(userr);
             }
         }
 
