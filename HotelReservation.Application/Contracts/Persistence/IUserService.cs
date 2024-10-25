@@ -1,6 +1,6 @@
 ﻿using HotelReservation.Application.DTO.User;
 
-namespace HotelReservation.Application.Contracts
+namespace HotelReservation.Application.Contracts.Persistence
 {
     public interface IUserService
     {

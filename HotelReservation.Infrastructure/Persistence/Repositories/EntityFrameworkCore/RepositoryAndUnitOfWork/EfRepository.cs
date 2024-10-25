@@ -13,7 +13,7 @@ namespace HotelReservation.Infrastructure.Persistence.Repositories.EntityFramewo
 {
     public class EfRepository<T> : IRepository<T> where T : AuditableEntity
     {
-        protected readonly DbContext _context;
+        private readonly DbContext _context;
         private readonly DbSet<T> _dbSet;
 
         public EfRepository(DbContext context)

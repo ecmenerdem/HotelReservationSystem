@@ -1,6 +1,6 @@
 ﻿using HotelReservation.Application.DTO.Room;
 
-namespace HotelReservation.Application.Contracts
+namespace HotelReservation.Application.Contracts.Persistence
 {
     public interface IRoomService
     {

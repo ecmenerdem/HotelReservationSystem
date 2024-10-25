@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HotelReservation.Domain.Repositories.DataManagement
 {
-    public interface IUnitOfWork: IDisposable
+    public interface IUnitOfWork
     {
         IUserRepository UserRepository { get; }
         IHotelRepository HotelRepository { get; }
