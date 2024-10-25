@@ -11,6 +11,6 @@ namespace HotelReservation.Application.Contracts.Persistence
         Task AddUserAsync(UserAddRequestDTO userDto);
         Task UpdateUserAsync(UserUpdateRequestDTO userDto);
         Task DeleteUserAsync(int userId);
-        Task<UserDTO> LoginAsync(string username, string password);
+        Task<LoginResponseDTO> LoginAsync(LoginRequestDTO loginRequestDTO);
     }
 }

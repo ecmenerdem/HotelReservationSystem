@@ -7,8 +7,12 @@ using HotelReservation.Domain.Repositories.DataManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using HotelReservation.Application.Contracts.Validation;
+using HotelReservation.Application.UseCases.User.Validation;
+using HotelReservation.Domain.Repositories;
 
 namespace HotelReservation.Application.UseCases.User
 {
@@ -17,16 +21,20 @@ namespace HotelReservation.Application.UseCases.User
         private readonly IUnitOfWork _uow;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IMapper _mapper;
-
-        public UserManager(IUnitOfWork uow, IPasswordHasher passwordHasher, IMapper mapper)
+        private readonly ITokenService _tokenService;
+        private readonly IGenericValidator _validator;
+        public UserManager(IUnitOfWork uow, IPasswordHasher passwordHasher, IMapper mapper, ITokenService tokenService, IGenericValidator validator)
         {
             _uow = uow;
             _passwordHasher = passwordHasher;
             _mapper = mapper;
+            _tokenService = tokenService;
+            _validator = validator;
         }
 
-        public Task AddUserAsync(UserAddRequestDTO userDto)
+        public async Task AddUserAsync(UserAddRequestDTO userDto)
         {
+            await _validator.ValidateAsync(userDto,typeof(UserRegisterValidator));
             throw new NotImplementedException();
         }
 
@@ -55,9 +63,10 @@ namespace HotelReservation.Application.UseCases.User
             throw new NotImplementedException();
         }
 
-        public async Task<UserDTO> LoginAsync(string username, string password)
+        public async Task<LoginResponseDTO> LoginAsync(LoginRequestDTO loginRequestDTO)
         {
-            var user = await _uow.UserRepository.GetAsync(x => x.Username == username && x.Password == _passwordHasher.HashPassword(password));
+            var user = await _uow.UserRepository.GetAsync(x => 
+                x.Username == loginRequestDTO.KullaniciAdi && x.Password == _passwordHasher.HashPassword(loginRequestDTO.Sifre));
 
             if (user is null)
             {
@@ -65,7 +74,15 @@ namespace HotelReservation.Application.UseCases.User
             }
             else
             {
-                return _mapper.Map<UserDTO>(user);
+                var claims = new List<Claim>
+                {
+                    new Claim("KullaniciGUID", user.GUID.ToString()),
+                    new Claim("KullaniciAdi", user.Username)
+                };
+                var token = _tokenService.GenerateToken(claims);
+                var loginResponseDTO=_mapper.Map<LoginResponseDTO>(user);
+                loginResponseDTO.Token = token;
+                return loginResponseDTO;
             }
         }
 

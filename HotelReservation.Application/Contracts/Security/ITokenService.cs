@@ -4,5 +4,5 @@ namespace HotelReservation.Application.Contracts.Security;
 
 public interface ITokenService
 {
-    string GenerateLoginToken(Guid userGUID, string kullaniciAdi, IEnumerable<Claim> additionalClaims = null);
+    string GenerateToken(IEnumerable<Claim> claims);
 }
