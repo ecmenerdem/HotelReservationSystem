@@ -4,16 +4,9 @@ using HotelReservation.Application.Contracts.Security;
 using HotelReservation.Application.DTO.User;
 using HotelReservation.Domain.Exceptions;
 using HotelReservation.Domain.Repositories.DataManagement;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 using HotelReservation.Application.Contracts.Validation;
 using HotelReservation.Application.UseCases.User.Validation;
-using HotelReservation.Domain.Repositories;
-using HotelReservation.Domain.Entities;
 
 namespace HotelReservation.Application.UseCases.User
 {
