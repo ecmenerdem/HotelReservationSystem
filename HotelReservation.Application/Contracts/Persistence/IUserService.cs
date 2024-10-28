@@ -5,7 +5,7 @@ namespace HotelReservation.Application.Contracts.Persistence
     public interface IUserService
     {
         Task<UserDTO> GetUserByIdAsync(int userId);
-        Task<UserDTO> GetUserByGUIDAsync(int userGUID);
+        Task<UserDTO> GetUserByGUIDAsync(Guid userGUID);
         Task<UserDTO> GetUserByUsernameAsync(string username);
         Task<IEnumerable<UserDTO>> GetAllUsersAsync();
         Task AddUserAsync(UserAddRequestDTO userDto);

@@ -42,6 +42,11 @@ namespace HotelReservation.Application.UseCases.User.Mapping
                 .ForMember(dest => dest.PhoneNumber,
                     opt => opt.MapFrom(src => src.PhoneNumber))
                 .ReverseMap();
+            
+            
+            CreateMap<UserUpdateRequestDTO, Domain.Entities.User>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+            // UserUpdateRequestDTO içindeki null olmayan alanları User nesnesine eşler
         }
     }
 }

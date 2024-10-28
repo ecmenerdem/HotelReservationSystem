@@ -24,7 +24,9 @@ namespace HotelReservation.Application.UseCases.User
         private readonly IMapper _mapper;
         private readonly ITokenService _tokenService;
         private readonly IGenericValidator _validator;
-        public UserManager(IUnitOfWork uow, IPasswordHasher passwordHasher, IMapper mapper, ITokenService tokenService, IGenericValidator validator)
+
+        public UserManager(IUnitOfWork uow, IPasswordHasher passwordHasher, IMapper mapper, ITokenService tokenService,
+            IGenericValidator validator)
         {
             _uow = uow;
             _passwordHasher = passwordHasher;
@@ -35,7 +37,7 @@ namespace HotelReservation.Application.UseCases.User
 
         public async Task AddUserAsync(UserAddRequestDTO userDto)
         {
-            await _validator.ValidateAsync(userDto,typeof(UserRegisterValidator));
+            await _validator.ValidateAsync(userDto, typeof(UserRegisterValidator));
             Domain.Entities.User user = _mapper.Map<Domain.Entities.User>(userDto);
             await _uow.UserRepository.AddAsync(user);
             await _uow.SaveAsync();
@@ -46,30 +48,35 @@ namespace HotelReservation.Application.UseCases.User
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<UserDTO>> GetAllUsersAsync()
+        public async Task<IEnumerable<UserDTO>> GetAllUsersAsync()
         {
-            throw new NotImplementedException();
+            var users = await _uow.UserRepository.GetAllAsync();
+            return users.Select(user => _mapper.Map<UserDTO>(user)).ToList();
         }
 
-        public Task<UserDTO> GetUserByGUIDAsync(int userGUID)
+        public async Task<UserDTO> GetUserByGUIDAsync(Guid userGUID)
         {
-            throw new NotImplementedException();
+            var user = await _uow.UserRepository.GetAsync(q => q.GUID == userGUID);
+            return _mapper.Map<UserDTO>(user);
         }
 
-        public Task<UserDTO> GetUserByIdAsync(int userId)
+        public async Task<UserDTO> GetUserByIdAsync(int userId)
         {
-            throw new NotImplementedException();
+            var user = await _uow.UserRepository.GetAsync(q => q.ID == userId);
+            return _mapper.Map<UserDTO>(user);
         }
 
-        public Task<UserDTO> GetUserByUsernameAsync(string username)
+        public async Task<UserDTO> GetUserByUsernameAsync(string username)
         {
-            throw new NotImplementedException();
+            var user = await _uow.UserRepository.GetAsync(q => q.Username == username);
+            return _mapper.Map<UserDTO>(user);
         }
 
         public async Task<LoginResponseDTO> LoginAsync(LoginRequestDTO loginRequestDTO)
         {
-            var user = await _uow.UserRepository.GetAsync(x => 
-                x.Username == loginRequestDTO.KullaniciAdi && x.Password == _passwordHasher.HashPassword(loginRequestDTO.Sifre));
+            var user = await _uow.UserRepository.GetAsync(x =>
+                x.Username == loginRequestDTO.KullaniciAdi &&
+                x.Password == _passwordHasher.HashPassword(loginRequestDTO.Sifre));
 
             if (user is null)
             {
@@ -83,15 +90,23 @@ namespace HotelReservation.Application.UseCases.User
                     new Claim("KullaniciAdi", user.Username)
                 };
                 var token = _tokenService.GenerateToken(claims);
-                var loginResponseDTO=_mapper.Map<LoginResponseDTO>(user);
+                var loginResponseDTO = _mapper.Map<LoginResponseDTO>(user);
                 loginResponseDTO.Token = token;
                 return loginResponseDTO;
             }
         }
 
-        public Task UpdateUserAsync(UserUpdateRequestDTO userDto)
+        public async Task UpdateUserAsync(UserUpdateRequestDTO userDto)
         {
-            throw new NotImplementedException();
+            var user = await _uow.UserRepository.GetAsync(q => q.GUID == userDto.Guid);
+            if (user is null)
+            {
+                throw new UserNotFoundException();
+            }
+
+            _mapper.Map(userDto, user);
+            _uow.UserRepository.Update(user);
+            await _uow.SaveAsync();
         }
     }
 }
