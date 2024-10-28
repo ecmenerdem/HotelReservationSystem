@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using HotelReservation.Application.Contracts.Validation;
 using HotelReservation.Application.UseCases.User.Validation;
 using HotelReservation.Domain.Repositories;
+using HotelReservation.Domain.Entities;
 
 namespace HotelReservation.Application.UseCases.User
 {
@@ -35,7 +36,9 @@ namespace HotelReservation.Application.UseCases.User
         public async Task AddUserAsync(UserAddRequestDTO userDto)
         {
             await _validator.ValidateAsync(userDto,typeof(UserRegisterValidator));
-            throw new NotImplementedException();
+            Domain.Entities.User user = _mapper.Map<Domain.Entities.User>(userDto);
+            await _uow.UserRepository.AddAsync(user);
+            await _uow.SaveAsync();
         }
 
         public Task DeleteUserAsync(int userId)
