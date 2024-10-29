@@ -31,7 +31,10 @@ namespace HotelReservation.Application.UseCases.User
         public async Task AddUserAsync(UserAddRequestDTO userDto)
         {
             await _validator.ValidateAsync(userDto, typeof(UserRegisterValidator));
+            // Kullanıcı şifresini hashle
+            var hashedPassword = _passwordHasher.HashPassword(userDto.Password);
             Domain.Entities.User user = _mapper.Map<Domain.Entities.User>(userDto);
+            user.Password = hashedPassword;
             await _uow.UserRepository.AddAsync(user);
             await _uow.SaveAsync();
         }

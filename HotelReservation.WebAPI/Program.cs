@@ -22,7 +22,7 @@ namespace HotelReservation.WebAPI
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -35,7 +35,8 @@ namespace HotelReservation.WebAPI
             builder.Services.AddScoped<IGenericValidator, FluentValidator>();
             
             
-            builder.Services.AddAutoMapper(typeof(Program));
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             
             // FluentValidation
             builder.Services.AddFluentValidationAutoValidation();
