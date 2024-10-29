@@ -9,14 +9,15 @@ using System.Threading.Tasks;
 
 namespace HotelReservation.Infrastructure.Persistence.EFCore.Context
 {
-    public class HotelReservationAPIContext:DbContext
+    public class HotelReservationAPIContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("data source=EERDEM\\SQLEXPRESS;initial catalog=HotelReservationDB;integrated security=True; TrustServerCertificate=true");
+                //optionsBuilder.UseSqlServer("data source=EERDEM\\SQLEXPRESS;initial catalog=HotelReservationDB;integrated security=True; TrustServerCertificate=true");
 
+                optionsBuilder.UseSqlServer("server=.;Database=HotelReservationDB;Integrated Security=true; TrustServerCertificate=true");
             }
             //if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")=="Development")
             //{
