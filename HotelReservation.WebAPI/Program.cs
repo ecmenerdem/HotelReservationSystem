@@ -43,6 +43,8 @@ namespace HotelReservation.WebAPI
 
 
             var app = builder.Build();
+            
+            UserRegisterValidator.Initialize(app.Services.CreateScope().ServiceProvider.GetRequiredService<IUserService>());
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

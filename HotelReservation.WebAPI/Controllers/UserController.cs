@@ -43,11 +43,6 @@ public class UserController : Controller
     [HttpPost("/Login")]
     public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginRequestDTO)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
         var loginResponse = await _userService.LoginAsync(loginRequestDTO);
 
         if (loginResponse.StatusCode == HttpStatusCode.OK)
