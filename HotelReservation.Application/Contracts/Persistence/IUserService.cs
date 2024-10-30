@@ -1,4 +1,5 @@
 ﻿using HotelReservation.Application.DTO.User;
+using HotelReservation.Application.Result;
 
 namespace HotelReservation.Application.Contracts.Persistence
 {
@@ -11,6 +12,6 @@ namespace HotelReservation.Application.Contracts.Persistence
         Task AddUserAsync(UserAddRequestDTO userDto);
         Task UpdateUserAsync(UserUpdateRequestDTO userDto);
         Task DeleteUserAsync(int userId);
-        Task<LoginResponseDTO> LoginAsync(LoginRequestDTO loginRequestDTO);
+        Task<ApiResult<LoginResponseDTO>> LoginAsync(LoginRequestDTO loginRequestDTO);
     }
 }

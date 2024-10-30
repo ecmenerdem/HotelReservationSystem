@@ -11,6 +11,10 @@ namespace HotelReservation.Infrastructure.Security
 {
     public class BCryptPasswordHasher : IPasswordHasher
     {
+        public BCryptPasswordHasher()
+        {
+            
+        }
         public string HashPassword(string password)
         {
             return BCrypt.Net.BCrypt.HashPassword(password);

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Net;
+using AutoMapper;
 using HotelReservation.Application.Contracts.Persistence;
 using HotelReservation.Application.Contracts.Security;
 using HotelReservation.Application.DTO.User;
@@ -6,6 +7,7 @@ using HotelReservation.Domain.Exceptions;
 using HotelReservation.Domain.Repositories.DataManagement;
 using System.Security.Claims;
 using HotelReservation.Application.Contracts.Validation;
+using HotelReservation.Application.Result;
 using HotelReservation.Application.UseCases.User.Validation;
 
 namespace HotelReservation.Application.UseCases.User
@@ -68,15 +70,17 @@ namespace HotelReservation.Application.UseCases.User
             return _mapper.Map<UserDTO>(user);
         }
 
-        public async Task<LoginResponseDTO> LoginAsync(LoginRequestDTO loginRequestDTO)
+        public async Task<ApiResult<LoginResponseDTO>> LoginAsync(LoginRequestDTO loginRequestDTO)
         {
-            var user = await _uow.UserRepository.GetAsync(x =>
-                x.Username == loginRequestDTO.KullaniciAdi &&
-                x.Password == _passwordHasher.HashPassword(loginRequestDTO.Sifre));
+            var user = await _uow.UserRepository.GetAsync(x => x.Username == loginRequestDTO.KullaniciAdi);
 
-            if (user is null)
+            if (user == null || !_passwordHasher.VerifyPassword(user.Password, loginRequestDTO.Sifre))
             {
-                throw new UserNotFoundException();
+                // Kullanıcı bulunamadı veya şifre yanlış
+
+                List<string> errors = new() { "Kullanıcı Adı Veya Şifre Yanlış" };
+                
+                return ApiResult<LoginResponseDTO>.FailureResult(new ErrorResult(errors), HttpStatusCode.NotFound);
             }
             else
             {
@@ -88,7 +92,7 @@ namespace HotelReservation.Application.UseCases.User
                 var token = _tokenService.GenerateToken(claims);
                 var loginResponseDTO = _mapper.Map<LoginResponseDTO>(user);
                 loginResponseDTO.Token = token;
-                return loginResponseDTO;
+                return ApiResult<LoginResponseDTO>.SuccessResult(loginResponseDTO);
             }
         }
 
