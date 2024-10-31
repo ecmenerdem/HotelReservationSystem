@@ -5,13 +5,14 @@ namespace HotelReservation.Application.Contracts.Persistence
 {
     public interface IUserService
     {
-        Task<UserDTO> GetUserByIdAsync(int userId);
-        Task<UserDTO> GetUserByGUIDAsync(Guid userGUID);
-        Task<UserDTO> GetUserByUsernameAsync(string username);
-        Task<IEnumerable<UserDTO>> GetAllUsersAsync();
-        Task AddUserAsync(UserAddRequestDTO userDto);
-        Task UpdateUserAsync(UserUpdateRequestDTO userDto);
-        Task DeleteUserAsync(int userId);
+        Task<ApiResult<UserDTO>> GetUserByIdAsync(int userId);
+        Task<ApiResult<UserDTO>> GetUserByGUIDAsync(Guid userGUID);
+        Task<ApiResult<UserDTO>> GetUserByUsernameAsync(string username);
+        Task<ApiResult<UserDTO>> GetUserByEMailAsync(string eMailAddress);
+        Task<ApiResult<IEnumerable<UserDTO>>> GetAllUsersAsync();
+        Task<ApiResult<UserDTO>> AddUserAsync(UserAddRequestDTO userDto);
+        Task<ApiResult<bool>> UpdateUserAsync(UserUpdateRequestDTO userDto);
+        Task<ApiResult<bool>> DeleteUserAsync(int userId);
         Task<ApiResult<LoginResponseDTO>> LoginAsync(LoginRequestDTO loginRequestDTO);
     }
 }

@@ -10,7 +10,7 @@ namespace HotelReservation.Domain.Repositories.DataManagement
 {
     public interface IRepository<T> where T : AuditableEntity
     {
-        Task<T> GetAsync(Expression<Func<T, bool>> filter, params string[] includeProperties);
+        Task<T?> GetAsync(Expression<Func<T, bool>> filter, params string[] includeProperties);
         Task<T> GetByIdAsync(int ID);
         Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null, params string[] includeProperties);
 

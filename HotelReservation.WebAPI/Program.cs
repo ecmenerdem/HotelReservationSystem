@@ -11,6 +11,7 @@ using HotelReservation.Infrastructure.Persistence.EFCore.Context;
 using HotelReservation.Infrastructure.Persistence.Repositories.EntityFrameworkCore.RepositoryAndUnitOfWork;
 using HotelReservation.Infrastructure.Security;
 using HotelReservation.Infrastructure.Validation.FluentValidation;
+using HotelReservation.WebAPI.Middleware;
 
 namespace HotelReservation.WebAPI
 {
@@ -43,6 +44,8 @@ namespace HotelReservation.WebAPI
 
 
             var app = builder.Build();
+
+            app.UseGlobalExceptionHandlerMiddleware();
             
             UserRegisterValidator.Initialize(app.Services.CreateScope().ServiceProvider.GetRequiredService<IUserService>());
 

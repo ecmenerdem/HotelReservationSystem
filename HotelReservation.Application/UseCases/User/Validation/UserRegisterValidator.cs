@@ -21,12 +21,19 @@ public class UserRegisterValidator:AbstractValidator<UserAddRequestDTO>
         RuleFor(q => q.Username).MustAsync(CheckUniqueUserName).WithMessage("Farklı Bir Kullanıcı Adı Giriniz.");
         RuleFor(q=>q.Password).NotEmpty().WithMessage("Şifre Boş Olamaz");
         RuleFor(q=>q.Email).NotEmpty().WithMessage("E-Posta Boş Olamaz");
+        RuleFor(q => q.Email).MustAsync(CheckUniqueEMail).WithMessage("Farklı Bir E-Posta Adresi Giriniz.");
         RuleFor(q=>q.PhoneNumber).NotEmpty().WithMessage("Telefon Numarası Boş Olamaz");
+    }
+
+    private async Task<bool> CheckUniqueEMail(string eMail, CancellationToken arg2)
+    {
+        var existingUser = await _userService.GetUserByEMailAsync(eMail);
+        return existingUser.Data is null;
     }
 
     private async Task<bool> CheckUniqueUserName(string username, CancellationToken cancellationToken)
     {
         var existingUser = await _userService.GetUserByUsernameAsync(username);
-        return existingUser is null;
+        return existingUser.Data is null;
     }
 }

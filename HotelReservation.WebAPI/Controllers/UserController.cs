@@ -34,9 +34,8 @@ public class UserController : Controller
             return BadRequest(ModelState);
         }
 
-        await _userService.AddUserAsync(userDto);
-
-        return Created("", new { message = "User added successfully" });
+       var result= await _userService.AddUserAsync(userDto);
+        return Ok(result);
     }
 
     // POST: api/User/login

@@ -1,3 +1,4 @@
+
 using System.Net;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http;
@@ -29,7 +30,7 @@ public class ApiResult<T>
         Data = data;
         Error = error;
     }
-
+    
     // Başarılı bir sonuç için fabrika metodu
     public static ApiResult<T> SuccessResult(T data, string message = "İşlem Başarılı",
         HttpStatusCode statusCode = HttpStatusCode.OK)
@@ -38,13 +39,13 @@ public class ApiResult<T>
     }
 
     // Hatalı bir sonuç için fabrika metodu
-    public static ApiResult<T> FailureResult(ErrorResult Error, string message = "İşlem Başarısız", HttpStatusCode statusCode = HttpStatusCode.InternalServerError)
+    public static ApiResult<T> FailureResult(ErrorResult error, string message = "İşlem Başarısız", HttpStatusCode statusCode = HttpStatusCode.InternalServerError)
     {
-        return new ApiResult<T>(false, message, default, Error);
+        return new ApiResult<T>(false, message, default, error);
     }
-    public static ApiResult<T> FailureResult(ErrorResult Error, HttpStatusCode statusCode = HttpStatusCode.InternalServerError)
+    public static ApiResult<T> FailureResult(ErrorResult error, HttpStatusCode statusCode = HttpStatusCode.InternalServerError)
     {
-        return new ApiResult<T>(false, "İşlem Başarısız", default, Error);
+        return new ApiResult<T>(false, "İşlem Başarısız", default, error);
     }
 
     // Uyarı veya özel mesaj gerektiren durumlar için fabrika metodu

@@ -1,7 +1,10 @@
-﻿namespace HotelReservation.Application.DTO.User
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HotelReservation.Application.DTO.User
 {
     public class UserAddRequestDTO
     {
+        [Required(ErrorMessage = "İsim Zorunludur.")]
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Username { get; set; }

@@ -30,44 +30,88 @@ namespace HotelReservation.Application.UseCases.User
             _validator = validator;
         }
 
-        public async Task AddUserAsync(UserAddRequestDTO userDto)
+        public async Task<ApiResult<UserDTO>> AddUserAsync(UserAddRequestDTO userRequestDto)
         {
-            await _validator.ValidateAsync(userDto, typeof(UserRegisterValidator));
+            await _validator.ValidateAsync(userRequestDto, typeof(UserRegisterValidator));
             // Kullanıcı şifresini hashle
-            var hashedPassword = _passwordHasher.HashPassword(userDto.Password);
-            Domain.Entities.User user = _mapper.Map<Domain.Entities.User>(userDto);
+            var hashedPassword = _passwordHasher.HashPassword(userRequestDto.Password);
+            Domain.Entities.User user = _mapper.Map<Domain.Entities.User>(userRequestDto);
             user.Password = hashedPassword;
             await _uow.UserRepository.AddAsync(user);
             await _uow.SaveAsync();
+            
+            UserDTO userDto = _mapper.Map<UserDTO>(user);
+            userDto.Password = null;
+            return ApiResult<UserDTO>.SuccessResult(userDto);
         }
 
-        public Task DeleteUserAsync(int userId)
+        public Task<ApiResult<bool>> DeleteUserAsync(int userId)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<UserDTO>> GetAllUsersAsync()
+        public async Task<ApiResult<UserDTO>> GetUserByEMailAsync(string eMailAddress)
+        {
+            var user = await _uow.UserRepository.GetAsync(q => q.Email.ToLower()==eMailAddress.ToLower());
+            
+            if (user == null)
+            {
+                var error = new ErrorResult(new List<string>(){"Kullanıcı Bulunamadı"});
+
+               
+                
+                return ApiResult<UserDTO>.FailureResult(error, HttpStatusCode.NotFound);
+            }
+
+            return  ApiResult<UserDTO>.SuccessResult(_mapper.Map<UserDTO>(user));
+        }
+
+        public async Task<ApiResult<IEnumerable<UserDTO>>> GetAllUsersAsync()
         {
             var users = await _uow.UserRepository.GetAllAsync();
-            return users.Select(user => _mapper.Map<UserDTO>(user)).ToList();
+            return ApiResult<IEnumerable<UserDTO>>.SuccessResult(users.Select(user => _mapper.Map<UserDTO>(user)).ToList());
         }
 
-        public async Task<UserDTO> GetUserByGUIDAsync(Guid userGUID)
+        public async Task<ApiResult<UserDTO>> GetUserByGUIDAsync(Guid userGUID)
         {
             var user = await _uow.UserRepository.GetAsync(q => q.GUID == userGUID);
-            return _mapper.Map<UserDTO>(user);
+
+            if (user == null)
+            {
+                var error = new ErrorResult(new List<string>(){"Kullanıcı Bulunamadı"});
+                
+                return ApiResult<UserDTO>.FailureResult(error, HttpStatusCode.NotFound);
+            }
+            
+            return  ApiResult<UserDTO>.SuccessResult(_mapper.Map<UserDTO>(user));
         }
 
-        public async Task<UserDTO> GetUserByIdAsync(int userId)
+        public async Task<ApiResult<UserDTO>> GetUserByIdAsync(int userId)
         {
             var user = await _uow.UserRepository.GetAsync(q => q.ID == userId);
-            return _mapper.Map<UserDTO>(user);
+            
+            if (user == null)
+            {
+                var error = new ErrorResult(new List<string>(){"Kullanıcı Bulunamadı"});
+                
+                return ApiResult<UserDTO>.FailureResult(error, HttpStatusCode.NotFound);
+            }
+            
+            return  ApiResult<UserDTO>.SuccessResult(_mapper.Map<UserDTO>(user));
+            
         }
 
-        public async Task<UserDTO> GetUserByUsernameAsync(string username)
+        public async Task<ApiResult<UserDTO>> GetUserByUsernameAsync(string username)
         {
             var user = await _uow.UserRepository.GetAsync(q => q.Username == username);
-            return _mapper.Map<UserDTO>(user);
+            if (user == null)
+            {
+                var error = new ErrorResult(new List<string>(){"Kullanıcı Bulunamadı"});
+                
+                return ApiResult<UserDTO>.FailureResult(error, HttpStatusCode.NotFound);
+            }
+            
+            return  ApiResult<UserDTO>.SuccessResult(_mapper.Map<UserDTO>(user));
         }
 
         public async Task<ApiResult<LoginResponseDTO>> LoginAsync(LoginRequestDTO loginRequestDTO)
@@ -77,11 +121,7 @@ namespace HotelReservation.Application.UseCases.User
 
             if (user == null || !_passwordHasher.VerifyPassword(user.Password, loginRequestDTO.Sifre))
             {
-                // Kullanıcı bulunamadı veya şifre yanlış
-
-                List<string> errors = new() { "Kullanıcı Adı Veya Şifre Yanlış" };
-                
-                return ApiResult<LoginResponseDTO>.FailureResult(new ErrorResult(errors), HttpStatusCode.NotFound);
+                throw new UserNotFoundException(HttpStatusCode.NotFound);
             }
             else
             {
@@ -97,17 +137,21 @@ namespace HotelReservation.Application.UseCases.User
             }
         }
 
-        public async Task UpdateUserAsync(UserUpdateRequestDTO userDto)
+        public async Task<ApiResult<bool>> UpdateUserAsync(UserUpdateRequestDTO userDto)
         {
             var user = await _uow.UserRepository.GetAsync(q => q.GUID == userDto.Guid);
-            if (user is null)
+            if (user == null)
             {
-                throw new UserNotFoundException();
+                var error = new ErrorResult(new List<string>(){"Kullanıcı Bulunamadı"});
+                
+                return ApiResult<bool>.FailureResult(error, HttpStatusCode.NotFound);
             }
-
+            
             _mapper.Map(userDto, user);
             _uow.UserRepository.Update(user);
             await _uow.SaveAsync();
+            
+            return ApiResult<bool>.SuccessResult(true);
         }
     }
 }
