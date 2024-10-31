@@ -51,6 +51,18 @@ public class GlobalExceptionHandlerMiddleware
                     new JsonSerializerOptions() { PropertyNamingPolicy = null }
                 );
             }
+            else if (ex.GetType() == typeof(InvalidUserCredentialsException))
+            {
+                List<string> errors = new() { ex.Message };
+                ErrorResult errorResult = new ErrorResult(errors);
+
+                httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                httpContext.Response.ContentType = "application/json";
+                await httpContext.Response.WriteAsJsonAsync(
+                    ApiResult<bool>.FailureResult(errorResult, HttpStatusCode.BadRequest),
+                    new JsonSerializerOptions() { PropertyNamingPolicy = null }
+                );
+            }
             else
             {
                 httpContext.Response.ContentType = "application/json";

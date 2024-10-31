@@ -118,7 +118,7 @@ namespace HotelReservation.Application.UseCases.User
 
             if (user == null || !_passwordHasher.VerifyPassword(user.Password, loginRequestDTO.Sifre))
             {
-                throw new UserNotFoundException();
+                throw new InvalidUserCredentialsException();
             }
             else
             {
