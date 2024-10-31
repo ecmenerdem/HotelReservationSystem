@@ -5,6 +5,7 @@ namespace HotelReservation.Domain.Const;
 
 public static class AppContextManager
 {
+    /*Ecmen*/
     public static HttpStatusCode ResponseStatusCode
     {
         get
