@@ -28,27 +28,27 @@ public class GlobalExceptionHandlerMiddleware
             {
                 var validationException = ex as FluentValidation.ValidationException;
 
-                var validationErrors = validationException.Errors.Select(q=>q.ErrorMessage);
+                var validationErrors = validationException.Errors.Select(q => q.ErrorMessage);
 
                 ErrorResult errorResult = new ErrorResult(validationErrors.ToList());
-                
+
                 httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 httpContext.Response.ContentType = "application/json";
                 await httpContext.Response.WriteAsJsonAsync(
                     ApiResult<bool>.FailureResult(errorResult, HttpStatusCode.BadRequest),
-                    new JsonSerializerOptions() { PropertyNamingPolicy = null}
-                    );
+                    new JsonSerializerOptions() { PropertyNamingPolicy = null }
+                );
             }
-           else if (ex.GetType() == typeof(UserNotFoundException))
+            else if (ex.GetType() == typeof(UserNotFoundException))
             {
-                 List<string>errors = new(){ex.Message};
+                List<string> errors = new() { ex.Message };
                 ErrorResult errorResult = new ErrorResult(errors);
 
                 httpContext.Response.StatusCode = (int)AppContextManager.ResponseStatusCode;
                 httpContext.Response.ContentType = "application/json";
                 await httpContext.Response.WriteAsJsonAsync(
                     ApiResult<bool>.FailureResult(errorResult, HttpStatusCode.BadRequest),
-                    new JsonSerializerOptions() { PropertyNamingPolicy = null}
+                    new JsonSerializerOptions() { PropertyNamingPolicy = null }
                 );
             }
             else
@@ -63,7 +63,7 @@ public class GlobalExceptionHandlerMiddleware
                 };
 
                 ErrorResult errorResult = new ErrorResult(errors);
-                
+
                 await httpContext.Response.WriteAsJsonAsync(
                     ApiResult<bool>.FailureResult(errorResult, HttpStatusCode.InternalServerError));
             }

@@ -57,9 +57,6 @@ namespace HotelReservation.Application.UseCases.User
             if (user == null)
             {
                 var error = new ErrorResult(new List<string>(){"Kullanıcı Bulunamadı"});
-
-               
-                
                 return ApiResult<UserDTO>.FailureResult(error, HttpStatusCode.NotFound);
             }
 
@@ -121,7 +118,7 @@ namespace HotelReservation.Application.UseCases.User
 
             if (user == null || !_passwordHasher.VerifyPassword(user.Password, loginRequestDTO.Sifre))
             {
-                throw new UserNotFoundException(HttpStatusCode.NotFound);
+                throw new UserNotFoundException();
             }
             else
             {
