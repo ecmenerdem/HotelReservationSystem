@@ -42,9 +42,18 @@ namespace HotelReservation.WebAPI
             // FluentValidation
             builder.Services.AddFluentValidationAutoValidation();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
 
             var app = builder.Build();
-
+            app.UseCors("AllowAllOrigins"); 
             app.UseGlobalExceptionHandlerMiddleware();
             
             UserRegisterValidator.Initialize(app.Services.CreateScope().ServiceProvider.GetRequiredService<IUserService>());
