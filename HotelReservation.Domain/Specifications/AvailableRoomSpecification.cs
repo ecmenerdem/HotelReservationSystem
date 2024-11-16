@@ -9,7 +9,7 @@ namespace HotelReservation.Domain.Specifications
 {
     public class AvailableRoomSpecification
     {
-        public bool IsSatisfiedBy(Room room, DateTime checkInDate, DateTime checkOutDate)
+        public bool IsAvalibleForPurchase(Room room, DateTime checkInDate, DateTime checkOutDate)
         {
             return room.IsAvailable && checkInDate < checkOutDate;
         }
