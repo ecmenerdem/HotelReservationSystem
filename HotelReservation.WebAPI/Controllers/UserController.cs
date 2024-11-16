@@ -24,7 +24,7 @@ public class UserController : Controller
     {
         var users = await _userService.GetAllUsersAsync();
         return Ok(users);
-    }
+    } 
 
     [HttpPost("/User")]
     public async Task<IActionResult> AddUser([FromBody] UserAddRequestDTO userDto)
