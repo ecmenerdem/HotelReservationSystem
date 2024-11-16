@@ -24,7 +24,7 @@ namespace HotelReservation.Domain.Entities
         // Navigation Property
         public virtual IEnumerable<Reservation> Reservations { get; set; }
 
-        // Kullanıcının tam adını almak için yardımcı bir property
+        // Kullanıcının tam adını almak için yardımcı bir propertyy
         public string FullName => $"{FirstName} {LastName}";
     }
 }
