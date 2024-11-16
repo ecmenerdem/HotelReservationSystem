@@ -20,9 +20,9 @@ public class Room : AuditableEntity
     public string Description { get; set; }
 
     // Navigation Properties
-    public Hotel Hotel { get; set; }
-    public IEnumerable<RoomImage> RoomImages { get; set; }
-    public IEnumerable<Reservation> Reservations { get; set; }
+    public virtual Hotel Hotel { get; set; }
+    public virtual IEnumerable<RoomImage> RoomImages { get; set; }
+    public virtual IEnumerable<Reservation> Reservations { get; set; }
 
     
 }

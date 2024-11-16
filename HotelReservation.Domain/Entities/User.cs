@@ -22,7 +22,7 @@ namespace HotelReservation.Domain.Entities
         public string PhoneNumber { get; set; }
 
         // Navigation Property
-        public IEnumerable<Reservation> Reservations { get; set; }
+        public virtual IEnumerable<Reservation> Reservations { get; set; }
 
         // Kullanıcının tam adını almak için yardımcı bir property
         public string FullName => $"{FirstName} {LastName}";

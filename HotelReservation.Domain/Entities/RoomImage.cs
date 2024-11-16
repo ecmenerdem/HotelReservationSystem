@@ -13,6 +13,6 @@ namespace HotelReservation.Domain.Entities
         public string ImageUrl { get; set; }
 
         // Navigation Property
-        public Room Room { get; set; }
+        public virtual Room Room { get; set; }
     }
 }

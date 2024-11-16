@@ -12,6 +12,6 @@ public class Reservation : AuditableEntity
     public decimal TotalPrice { get; set; }
 
     // Navigation Properties
-    public User User { get; set; }
-    public Room Room { get; set; }
+    public virtual User User { get; set; }
+    public virtual Room Room { get; set; }
 }
