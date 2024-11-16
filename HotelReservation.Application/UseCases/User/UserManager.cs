@@ -65,7 +65,7 @@ namespace HotelReservation.Application.UseCases.User
 
         public async Task<ApiResult<IEnumerable<UserDTO>>> GetAllUsersAsync()
         {
-            var users = await _uow.UserRepository.GetAllAsync();
+            var users = await _uow.UserRepository.GetAllAsyncAsNoTracking();
             return ApiResult<IEnumerable<UserDTO>>.SuccessResult(users.Select(user => _mapper.Map<UserDTO>(user)).ToList());
         }
 
