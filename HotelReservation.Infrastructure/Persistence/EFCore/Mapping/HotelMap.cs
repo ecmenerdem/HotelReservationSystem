@@ -25,6 +25,8 @@ namespace HotelReservation.Infrastructure.Persistence.EFCore.Mapping
             builder.Property(h => h.Address)
                 .IsRequired()
                 .HasMaxLength(500);
+            
+            //builder.HasQueryFilter(q=>q.IsActive==true);  TODO: HasQuery Filter Kullanımı
 
             // Hotel - Room ilişkisi
             builder.HasMany(h => h.Rooms)
