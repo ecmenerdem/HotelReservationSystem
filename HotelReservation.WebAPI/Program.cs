@@ -74,6 +74,7 @@ namespace HotelReservation.WebAPI
         }
     }
 }
+
 /* CODE: Set environment variables WEB.CONFIG 
  
  <aspNetCore processPath="dotnet"
@@ -92,5 +93,6 @@ namespace HotelReservation.WebAPI
  /* CODE:  publish profile (.pubxml) 
   <PropertyGroup>
   <EnvironmentName>Development</EnvironmentName>
-</PropertyGroup>
+    </PropertyGroup>
   */
+  
