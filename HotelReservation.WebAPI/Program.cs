@@ -74,3 +74,23 @@ namespace HotelReservation.WebAPI
         }
     }
 }
+/* CODE: Set environment variables WEB.CONFIG 
+ 
+ <aspNetCore processPath="dotnet"
+      arguments=".\MyApp.dll"
+      stdoutLogEnabled="false"
+      stdoutLogFile=".\logs\stdout"
+      hostingModel="inprocess">
+  <environmentVariables>
+    <environmentVariable name="ASPNETCORE_ENVIRONMENT" value="Development" />
+    <environmentVariable name="CONFIG_DIR" value="f:\application_config" />
+  </environmentVariables>
+</aspNetCore>
+ 
+ */
+ 
+ /* CODE:  publish profile (.pubxml) 
+  <PropertyGroup>
+  <EnvironmentName>Development</EnvironmentName>
+</PropertyGroup>
+  */
