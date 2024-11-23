@@ -6,13 +6,6 @@ namespace HotelReservation.Infrastructure.Validation.FluentValidation;
 
 public class FluentValidator:IGenericValidator
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public FluentValidator(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
-
     public async Task ValidateAsync<T>(T entity, Type type=null)
     {
         //verilen tip ile validator oluşturma durumu kontrol ediliyor.

@@ -1,6 +1,7 @@
 
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using HotelReservation.Application.Common;
 using HotelReservation.Application.Contracts.Persistence;
 using HotelReservation.Application.Contracts.Security;
 using HotelReservation.Application.Contracts.Validation;
@@ -28,6 +29,7 @@ namespace HotelReservation.WebAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddHttpContextAccessor();
+
             builder.Services.AddDbContext<HotelReservationAPIContext>();
             builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
             builder.Services.AddScoped<IUserService, UserManager>();
@@ -37,8 +39,8 @@ namespace HotelReservation.WebAPI
             
             
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            builder.Services.Configure<JWTExceptURLList>(builder.Configuration.GetSection(nameof(JWTExceptURLList)));
 
-            
             // FluentValidation
             builder.Services.AddFluentValidationAutoValidation();
 
@@ -55,7 +57,8 @@ namespace HotelReservation.WebAPI
             var app = builder.Build();
             app.UseCors("AllowAllOrigins"); 
             app.UseGlobalExceptionHandlerMiddleware();
-            
+           
+
             UserRegisterValidator.Initialize(app.Services.CreateScope().ServiceProvider.GetRequiredService<IUserService>());
 
             // Configure the HTTP request pipeline.
@@ -65,6 +68,7 @@ namespace HotelReservation.WebAPI
                 app.UseSwaggerUI();
             }
 
+            app.UseApiAuthorizationMiddleware();
             app.UseAuthorization();
 
 
