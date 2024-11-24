@@ -1,4 +1,5 @@
 
+using System.Data;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using HotelReservation.Application.Common;
@@ -13,6 +14,7 @@ using HotelReservation.Infrastructure.Persistence.Repositories.EntityFrameworkCo
 using HotelReservation.Infrastructure.Security;
 using HotelReservation.Infrastructure.Validation.FluentValidation;
 using HotelReservation.WebAPI.Middleware;
+using Microsoft.Data.SqlClient;
 
 namespace HotelReservation.WebAPI
 {
@@ -36,8 +38,9 @@ namespace HotelReservation.WebAPI
             builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
             builder.Services.AddScoped<ITokenService, TokenService>();
             builder.Services.AddScoped<IGenericValidator, FluentValidator>();
-            
-            
+
+            builder.Services.AddScoped<IDbConnection>(sp =>
+                new SqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.Configure<JWTExceptURLList>(builder.Configuration.GetSection(nameof(JWTExceptURLList)));
 

@@ -5,6 +5,7 @@ namespace HotelReservation.Domain.Repositories
 {
     public interface IHotelRepository : IRepository<Hotel>
     {
+        Task<Hotel> GetHotelWithRoomsAsync(int hotelId);
     }
 
 }
