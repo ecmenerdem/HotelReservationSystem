@@ -20,6 +20,7 @@ namespace HotelReservation.Infrastructure.Persistence.Repositories.Dapper
             _dbConnection = dbConnection;
         }
 
+
         public async Task<T?> GetAsync(Expression<Func<T, bool>> filter, params string[] includeProperties)
         {
             throw new NotImplementedException();
@@ -30,10 +31,9 @@ namespace HotelReservation.Infrastructure.Persistence.Repositories.Dapper
             throw new NotImplementedException();
         }
 
-        public async Task<IQueryable<T>> GetAllAsync(Func<T, bool> filter = null, params string[] includeProperties)
+        public async Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null, params string[] includeProperties)
         {
-            string query = $"SELECT * FROM {typeof(T).Name}";
-            return (await _dbConnection.QueryAsync<T>(query)).Where(filter);
+            throw new NotImplementedException();
         }
 
         public async Task<IQueryable<T>> GetAllAsyncAsNoTracking(Expression<Func<T, bool>> filter = null, params string[] includeProperties)
