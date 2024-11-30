@@ -2,6 +2,7 @@
 using System.Data;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using HealthChecks.UI.Client;
 using HotelReservation.Application.Common;
 using HotelReservation.Application.Contracts.Persistence;
 using HotelReservation.Application.Contracts.Security;
@@ -9,12 +10,15 @@ using HotelReservation.Application.Contracts.Validation;
 using HotelReservation.Application.UseCases.User;
 using HotelReservation.Application.UseCases.User.Validation;
 using HotelReservation.Domain.Repositories.DataManagement;
+using HotelReservation.Infrastructure.HealthCheck;
 using HotelReservation.Infrastructure.Persistence.EFCore.Context;
 using HotelReservation.Infrastructure.Persistence.Repositories.EntityFrameworkCore.RepositoryAndUnitOfWork;
 using HotelReservation.Infrastructure.Security;
 using HotelReservation.Infrastructure.Validation.FluentValidation;
 using HotelReservation.WebAPI.Middleware;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace HotelReservation.WebAPI
 {
@@ -31,7 +35,8 @@ namespace HotelReservation.WebAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddHttpContextAccessor();
-
+            builder.Services.AddHealthChecks()
+                .AddCheck<SqlHealthCheck>("MsSql", HealthStatus.Unhealthy);
             builder.Services.AddDbContext<HotelReservationAPIContext>();
             builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
             builder.Services.AddScoped<IUserService, UserManager>();
@@ -58,6 +63,10 @@ namespace HotelReservation.WebAPI
             });
 
             var app = builder.Build();
+            app.MapHealthChecks("/Health", new HealthCheckOptions
+            {
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
             app.UseCors("AllowAllOrigins"); 
             app.UseGlobalExceptionHandlerMiddleware();
            
