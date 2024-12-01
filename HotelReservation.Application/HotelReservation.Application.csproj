@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\Hotel\" />
+    <Folder Include="UseCases\Hotel\Validation\" />
   </ItemGroup>
 
 </Project>

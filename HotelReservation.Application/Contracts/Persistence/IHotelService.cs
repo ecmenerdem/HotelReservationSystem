@@ -4,15 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HotelReservation.Application.Result;
 
 namespace HotelReservation.Application.Contracts.Persistence
 {
     public interface IHotelService
     {
-        Task<HotelDTO> GetHotelByIdAsync(int hotelId);
-        Task<IEnumerable<HotelDTO>> GetAllHotelsAsync();
-        Task AddHotelAsync(HotelAddRequestDTO hotelDto);
-        Task UpdateHotelAsync(HotelUpdateRequestDTO hotelDto);
-        Task DeleteHotelAsync(int hotelId);
+        Task<ApiResult<HotelDTO>> GetHotelByIdAsync(int hotelId);
+        Task<ApiResult<IEnumerable<HotelDTO>>> GetAllHotelsAsync();
+        Task<HotelDTO> AddHotelAsync(HotelAddRequestDTO hotelDto);
+        Task<bool> UpdateHotelAsync(HotelUpdateRequestDTO hotelDto);
+        Task<bool> DeleteHotelAsync(int hotelId);
     }
 }
