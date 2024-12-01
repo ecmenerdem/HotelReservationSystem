@@ -15,7 +15,7 @@ public class FluentValidator:IGenericValidator
         var validator = (IValidator)Activator.CreateInstance(type);
 
         //valid veya valid olmama durumunun tamamı result olarak dönülür.
-        ValidationResult validationResult = await validator.ValidateAsync(new ValidationContext<object>(entity));
+        ValidationResult validationResult = await validator.ValidateAsync(new ValidationContext<T>(entity));
         
         if (!validationResult.IsValid)
         {
