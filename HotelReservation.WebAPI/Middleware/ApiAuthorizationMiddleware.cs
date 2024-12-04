@@ -18,7 +18,8 @@ namespace HotelReservation.WebAPI.Middleware
         private readonly IConfiguration _configuration;
         private readonly IOptionsMonitor<JWTExceptURLList> _jwtExcepURLList;
 
-        public ApiAuthorizationMiddleware(RequestDelegate next, IConfiguration configuration, IOptionsMonitor<JWTExceptURLList> jwtExcepUrlList)
+        public ApiAuthorizationMiddleware(RequestDelegate next, IConfiguration configuration,
+            IOptionsMonitor<JWTExceptURLList> jwtExcepUrlList)
         {
             _next = next;
             _configuration = configuration;
@@ -35,7 +36,8 @@ namespace HotelReservation.WebAPI.Middleware
                 if (authHeader != null)
                 {
                     var token = authHeader.Replace("Bearer ", "");
-                    var key = Encoding.UTF8.GetBytes(_configuration.GetValue<string>("AppSettings:JWTKey"));
+                    var key = Encoding.UTF8.GetBytes(_configuration.GetValue<string>("AppSettings:JWTKey") ??
+                                                     string.Empty);
 
                     jwtHandler.ValidateToken(token, new TokenValidationParameters
                     {
@@ -45,28 +47,25 @@ namespace HotelReservation.WebAPI.Middleware
                         ValidateAudience = false
                     }, out SecurityToken validatedToken);
 
-                    var jwtToken = (JwtSecurityToken) validatedToken;
+                    var jwtToken = (JwtSecurityToken)validatedToken;
 
 
                     if (jwtToken.ValidTo < DateTime.Now)
                     {
                         throw new TokenInvalidException();
                     }
-
                 }
 
                 else
                 {
                     throw new TokenNotFoundException();
                 }
-
-                
             }
+
             await _next(httpContext);
         }
 
         // Extension method used to add the middleware to the HTTP request pipeline.
-       
     }
 
     public static class ApiAuthorizationMiddlewareExtensions

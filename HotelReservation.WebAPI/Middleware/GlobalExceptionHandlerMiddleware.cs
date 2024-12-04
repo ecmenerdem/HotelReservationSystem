@@ -28,9 +28,9 @@ public class GlobalExceptionHandlerMiddleware
             {
                 var validationException = ex as FluentValidation.ValidationException;
 
-                var validationErrors = validationException.Errors.Select(q => q.ErrorMessage);
+                var validationErrors = validationException?.Errors.Select(q => q.ErrorMessage);
 
-                ErrorResult errorResult = new ErrorResult(validationErrors.ToList());
+                ErrorResult errorResult = new ErrorResult(validationErrors?.ToList());
 
                 httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 httpContext.Response.ContentType = "application/json";
