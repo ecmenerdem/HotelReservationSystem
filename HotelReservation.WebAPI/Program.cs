@@ -1,4 +1,3 @@
-
 using System.Data;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -30,7 +29,8 @@ namespace HotelReservation.WebAPI
 
             // Add services to the container.
 
-            builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
+            builder.Services.AddControllers()
+                .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -67,11 +67,12 @@ namespace HotelReservation.WebAPI
             {
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
             });
-            app.UseCors("AllowAllOrigins"); 
+            app.UseCors("AllowAllOrigins");
             app.UseGlobalExceptionHandlerMiddleware();
-           
 
-            UserRegisterValidator.Initialize(app.Services.CreateScope().ServiceProvider.GetRequiredService<IUserService>());
+
+            UserRegisterValidator.Initialize(app.Services.CreateScope().ServiceProvider
+                .GetRequiredService<IUserService>());
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -91,8 +92,8 @@ namespace HotelReservation.WebAPI
     }
 }
 
-/* CODE: Set environment variables WEB.CONFIG 
- 
+/* CODE: Set environment variables WEB.CONFIG
+
  <aspNetCore processPath="dotnet"
       arguments=".\MyApp.dll"
       stdoutLogEnabled="false"
@@ -103,12 +104,11 @@ namespace HotelReservation.WebAPI
     <environmentVariable name="CONFIG_DIR" value="f:\application_config" />
   </environmentVariables>
 </aspNetCore>
- 
+
  */
- 
- /* CODE:  publish profile (.pubxml) 
-  <PropertyGroup>
-  <EnvironmentName>Development</EnvironmentName>
-    </PropertyGroup>
-  */
-  
+
+/* CODE:  publish profile (.pubxml)
+ <PropertyGroup>
+ <EnvironmentName>Development</EnvironmentName>
+   </PropertyGroup>
+ */

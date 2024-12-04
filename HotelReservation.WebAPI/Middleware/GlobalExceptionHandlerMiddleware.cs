@@ -47,7 +47,7 @@ public class GlobalExceptionHandlerMiddleware
                 httpContext.Response.StatusCode = (int)AppContextManager.ResponseStatusCode;
                 httpContext.Response.ContentType = "application/json";
                 await httpContext.Response.WriteAsJsonAsync(
-                    ApiResult<bool>.FailureResult(errorResult, HttpStatusCode.BadRequest),
+                    ApiResult<bool>.FailureResult(errorResult, HttpStatusCode.NotFound),
                     new JsonSerializerOptions() { PropertyNamingPolicy = null }
                 );
             }
