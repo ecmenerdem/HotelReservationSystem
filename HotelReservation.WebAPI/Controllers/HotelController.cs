@@ -19,7 +19,7 @@ public class HotelController : Controller
     }
 
     // Get Hotel by ID
-    [HttpGet("{id}")]
+    [HttpGet("/Hotel/{id}")]
     public async Task<IActionResult> GetHotelById(int id)
     {
         var result = await _hotelService.GetHotelByIdAsync(id);
@@ -27,7 +27,7 @@ public class HotelController : Controller
     }
 
     // Get All Hotels
-    [HttpGet]
+    [HttpGet("/Hotels")]
     public async Task<IActionResult> GetAllHotels()
     {
         var result = await _hotelService.GetAllHotelsAsync();
@@ -35,7 +35,7 @@ public class HotelController : Controller
     }
 
     // Add a New Hotel
-    [HttpPost]
+    [HttpPost("/Hotel")]
     public async Task<IActionResult> AddHotel([FromBody] HotelAddRequestDTO hotelAddRequestDto)
     {
         var result = await _hotelService.AddHotelAsync(hotelAddRequestDto);
@@ -43,7 +43,7 @@ public class HotelController : Controller
     }
 
     // Update Hotel
-    [HttpPut("{id}")]
+    [HttpPut("/Hotel/{id}")]
     public async Task<IActionResult> UpdateHotel([FromBody] HotelUpdateRequestDTO hotelUpdateRequestDto)
     {
         var result = await _hotelService.UpdateHotelAsync(hotelUpdateRequestDto);
@@ -51,7 +51,7 @@ public class HotelController : Controller
     }
 
     // Delete Hotel
-    [HttpDelete("{id}")]
+    [HttpDelete("/Hotel/{id}")]
     public async Task<IActionResult> DeleteHotel(int id)
     {
         var result = await _hotelService.DeleteHotelAsync(id);
