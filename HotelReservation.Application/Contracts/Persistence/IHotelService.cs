@@ -12,8 +12,8 @@ namespace HotelReservation.Application.Contracts.Persistence
     {
         Task<ApiResult<HotelDTO>> GetHotelByIdAsync(int hotelId);
         Task<ApiResult<IEnumerable<HotelDTO>>> GetAllHotelsAsync();
-        Task<HotelDTO> AddHotelAsync(HotelAddRequestDTO hotelDto);
-        Task<bool> UpdateHotelAsync(HotelUpdateRequestDTO hotelDto);
-        Task<bool> DeleteHotelAsync(int hotelId);
+        Task<ApiResult<HotelDTO>> AddHotelAsync(HotelAddRequestDTO hotelDto);
+        Task<ApiResult<bool>> UpdateHotelAsync(HotelUpdateRequestDTO hotelDto);
+        Task<ApiResult<bool>> DeleteHotelAsync(int hotelId);
     }
 }
