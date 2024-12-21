@@ -4,6 +4,7 @@ using HotelReservation.Application.Contracts.Persistence;
 using HotelReservation.Application.DTO.Reservation;
 using HotelReservation.Application.DTO.Room;
 using HotelReservation.Application.Result;
+using HotelReservation.Domain.Exceptions;
 using HotelReservation.Domain.Repositories.DataManagement;
 
 namespace HotelReservation.Application.UseCases.Reservation;
@@ -98,6 +99,7 @@ public class ReservationManager : IReservationService
 
     public async Task<ApiResult<ReservationDTO>> AddReservationAsync(ReservationAddRequestDTO reservationDto)
     {
+        var room = await _uow.RoomRepository.GetAsync(r => r.GUID == reservationDto.RoomGuid);
         // Oda uygunluk kontrolü
         var isRoomAvailable = await _uow.ReservationRepository.GetAllAsync(r =>
             r.GUID == reservationDto.RoomGuid &&
@@ -105,8 +107,8 @@ public class ReservationManager : IReservationService
 
         if (isRoomAvailable.Any())
         {
-            var error = new ErrorResult(new List<string> { "Seçilen oda belirtilen tarihlerde uygun değil." });
-            return ApiResult<ReservationDTO>.FailureResult(error, HttpStatusCode.BadRequest);
+            throw new RoomNotAvailableException(room.ID,reservationDto.StartDate.ToShortDateString(), reservationDto.EndDate
+                .ToShortDateString());
         }
 
         var reservation = _mapper.Map<Domain.Entities.Reservation>(reservationDto);

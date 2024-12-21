@@ -1,5 +1,6 @@
 ﻿using HotelReservation.Application.Contracts.Persistence;
 using HotelReservation.Application.DTO.Reservation;
+using HotelReservation.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelReservation.WebAPI.Controllers;
@@ -21,7 +22,7 @@ public class ReservationController : Controller
     {
         if (startDate >= endDate)
         {
-            return BadRequest(new { Message = "Başlangıç tarihi bitiş tarihinden önce olmalıdır." });
+            throw new InvalidReservationDatesException();
         }
 
         var result = await _reservationService.GetAvailableRoomsAsync(hotelGuid, startDate, endDate);
