@@ -15,4 +15,9 @@
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UseCases\Reservation\Mapper\" />
+    <Folder Include="UseCases\Reservation\Validation\" />
+  </ItemGroup>
+
 </Project>

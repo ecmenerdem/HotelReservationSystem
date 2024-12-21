@@ -2,12 +2,12 @@
 {
     public class ReservationDTO
     {
-        public Guid GUID { get; set; }
-        public int HotelId { get; set; }
-        public int RoomId { get; set; }
-        public int UserId { get; set; }
-        public DateTime CheckInDate { get; set; }
-        public DateTime CheckOutDate { get; set; }
+        public Guid Guid { get; set; } // Unique Identifier for the Reservation
+        public Guid UserGuid { get; set; }
+        public Guid RoomGuid { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public decimal TotalPrice { get; set; }
+        public string Status { get; set; } // Confirmed, Pending, Cancelled
     }
 }
