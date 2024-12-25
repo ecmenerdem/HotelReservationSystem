@@ -1,67 +1,62 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.DotNet.Scaffolding.Shared.CodeModifier.CodeChange;
-using Newtonsoft.Json;
 using System.Net;
+using System.Text.Json;
+using HotelReservation.WebHelper.Const;
+using HotelReservation.WebHelper.DTO.Account.Login;
+using HotelReservation.WebHelper.Result;
+using HotelReservation.WebHelper.SessionHelper;
+using Microsoft.AspNetCore.Connections;
+using Microsoft.AspNetCore.Identity.Data;
+using RestSharp;
 
 namespace HotelReservation.WebUI.Areas.AdminPanel.Controllers
 {
+
+    [Area("AdminPanel")]
+    [Route("[action]")]
+
     public class AccountController : Controller
     {
-        [Area("AdminPanel")]
-        public class AccountController : Controller
+       
+        [HttpGet("/AdminAccount/Login")]
+        public IActionResult LoginPage()
         {
-            private readonly IHttpContextAccessor _httpContextAccessor;
+            return View();
+        }
 
-            public AccountController(IHttpContextAccessor contextAccessor)
+        [HttpPost("/Account/AdminLogin")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AdminLogin(LoginRequestDTO loginRequest)
+        {
+            var url = ApiEndpoint.ApiEndpointURL + "/Login";
+            var client = new RestClient(url);
+            var request = new RestRequest(url, Method.Post);
+            request.AddHeader("Content-Type", "application/json");
+            var body = JsonSerializer.Serialize(loginRequest);
+            request.AddBody(body, "application/json");
+            RestResponse response = await client.ExecuteAsync(request);
+
+            var responseObject = JsonSerializer.Deserialize<ApiResult<LoginResponseDTO>>(response.Content);
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
             {
-                _httpContextAccessor = contextAccessor;
+                ViewData["LoginError"] = "Kullanıcı Adı Veya Şifre Yanlış";
+                return View("LoginPage");
             }
-
-            [HttpGet("/AdminAccount/Login")]
-            public IActionResult Index()
+            else
             {
-                _httpContextAccessor.HttpContext.Session.Clear();
-                return View();
-            }
 
-            [HttpPost("/Account/AdminLogin")]
-            [ValidateAntiForgeryToken]
-            public async Task<IActionResult> AdminLogin(LoginDTO loginDTO)
-            {
-                var url = "http://localhost:5183/Login";
-                var client = new RestClient(url);
-                var request = new RestRequest(url, Method.Post);
-                request.AddHeader("Content-Type", "application/json");
-                var body = JsonConvert.SerializeObject(loginDTO);
-                request.AddBody(body, "application/json");
-                RestResponse restResponse = await client.ExecuteAsync(request);
-
-                var responseObject = JsonConvert.DeserializeObject<ApiResult<LoginDTO>>(restResponse.Content);
-
-                if (restResponse.StatusCode == HttpStatusCode.NotFound && responseObject?.Data == null)
-                {
-                    ViewBag.LoginError = "Buraya Bir Data Geliyor";
-                    ViewData["LoginError"] = "Kullanıcı Adı Veya Şifre Yanlış";
-                    TempData["LoginError"] = "Buraya Başka Bir Data Geliyor";
-                    return View("Index");
-                }
-                else if (restResponse.StatusCode != HttpStatusCode.OK)
-                {
-                    ViewData["LoginError"] = "Hata Oluştu";
-                    return View("Index");
-                }
-
-                //_httpContextAccessor.HttpContext.Session.SetString("UserAdSoyad",responseObject.Data.AdSoyad);
-
-                //_httpContextAccessor.HttpContext.Session.SetString("UserID", responseObject.Data.UserID.ToString());
-
-                //_httpContextAccessor.HttpContext.Session.SetString("EPosta", responseObject.Data.EPosta.ToString());
-
-                SessionManager.LoggedUser = responseObject.Data;
-
+                SessionManager.loginResponseDTO = responseObject.Data;
                 return RedirectToAction("Index", "Home");
             }
-
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            SessionManager.loginResponseDTO = null;
+            return RedirectToAction("LoginPage", "Account");
+        }
+
     }
+
 }
