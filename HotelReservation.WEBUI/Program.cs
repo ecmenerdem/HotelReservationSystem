@@ -8,6 +8,13 @@ namespace HotelReservationSystem.WEBUI
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            });
+            builder.Services.AddSession();
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddAntiforgery(opt => opt.HeaderName = "XSRF-Token");
 
             var app = builder.Build();
 
