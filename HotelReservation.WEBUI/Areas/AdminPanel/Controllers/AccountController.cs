@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Text.Json;
+using HotelReservation.WebHelper.APIHelper.Contract;
+using HotelReservation.WebHelper.APIHelper.Request;
 using HotelReservation.WebHelper.Const;
 using HotelReservation.WebHelper.DTO.Account.Login;
-using HotelReservation.WebHelper.Result;
 using HotelReservation.WebHelper.SessionHelper;
 using Microsoft.AspNetCore.Connections;
 using Microsoft.AspNetCore.Identity.Data;
@@ -17,7 +18,13 @@ namespace HotelReservation.WebUI.Areas.AdminPanel.Controllers
 
     public class AccountController : Controller
     {
-       
+        private readonly IApiService _apiService;
+
+        public AccountController(IApiService apiService)
+        {
+            _apiService = apiService;
+        }
+
         [HttpGet("/AdminAccount/Login")]
         public IActionResult LoginPage()
         {
@@ -28,17 +35,17 @@ namespace HotelReservation.WebUI.Areas.AdminPanel.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AdminLogin(LoginRequestDTO loginRequest)
         {
-            var url = ApiEndpoint.ApiEndpointURL + "/Login";
-            var client = new RestClient(url);
-            var request = new RestRequest(url, Method.Post);
-            request.AddHeader("Content-Type", "application/json");
-            var body = JsonSerializer.Serialize(loginRequest);
-            request.AddBody(body, "application/json");
-            RestResponse response = await client.ExecuteAsync(request);
+            ApiRequest<LoginRequestDTO> request = new()
+            {
+                URL = "/Login",
+                Method = HttpMethod.Post,
+                Body = loginRequest
 
-            var responseObject = JsonSerializer.Deserialize<ApiResult<LoginResponseDTO>>(response.Content);
+            };
 
-            if (response.StatusCode == HttpStatusCode.NotFound)
+            var response = await _apiService.SendRequestAsync<LoginRequestDTO, LoginResponseDTO>(request);
+
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
                 ViewData["LoginError"] = "Kullanıcı Adı Veya Şifre Yanlış";
                 return View("LoginPage");
@@ -46,7 +53,7 @@ namespace HotelReservation.WebUI.Areas.AdminPanel.Controllers
             else
             {
 
-                SessionManager.loginResponseDTO = responseObject.Data;
+                SessionManager.loginResponseDTO = response.Data;
                 return RedirectToAction("Index", "Home");
             }
         }

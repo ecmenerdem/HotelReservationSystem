@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json;
+using HotelReservation.Application.DTO.User;
 using HotelReservation.Application.Result;
 using HotelReservation.Domain.Const;
 using HotelReservation.Domain.Exceptions;
@@ -83,7 +84,7 @@ public class GlobalExceptionHandlerMiddleware
                 httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 httpContext.Response.ContentType = "application/json";
                 await httpContext.Response.WriteAsJsonAsync(
-                    ApiResult<bool>.FailureResult(errorResult, HttpStatusCode.Unauthorized),
+                    ApiResult<LoginResponseDTO>.FailureResult(errorResult, HttpStatusCode.Unauthorized),
                     new JsonSerializerOptions() { PropertyNamingPolicy = null }
                 );
             }

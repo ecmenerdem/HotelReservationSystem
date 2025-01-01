@@ -1,4 +1,6 @@
 using HotelReservation.WebHelper;
+using HotelReservation.WebHelper.APIHelper.Contract;
+using HotelReservation.WebHelper.APIHelper.Manager;
 
 namespace HotelReservationSystem.WEBUI
 {
@@ -20,7 +22,7 @@ namespace HotelReservationSystem.WEBUI
             // AppHttpContext'e DI ile eriþimi yapýlandýr
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddSingleton<AppHttpContext>();
-
+            builder.Services.AddScoped<IApiService, RestSharpApiManager>();
 
             builder.Services.AddAntiforgery(opt => opt.HeaderName = "XSRF-Token");
 

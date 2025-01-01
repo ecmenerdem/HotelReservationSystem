@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace HotelReservation.WebHelper.APIHelper.Result
 {
-    public class ApiResult<T>
+    public class ApiResult<TResponse>
     {
         public bool Success { get; set; }
-        public string Message { get; set; }
-        public T Data { get; set; }
+        public string? Message { get; set; }
+        public TResponse? Data { get; set; }
 
-        public ErrorResult Error { get; set; }
+        public ErrorResult? Error { get; set; }
 
 
         [JsonIgnore] public HttpStatusCode StatusCode { get; set; }
