@@ -20,6 +20,10 @@ public class LoginResponseMappingProfile:Profile
                 opt => opt.MapFrom(src => src.Email))
             .ForMember(dest => dest.PhoneNumber,
                 opt => opt.MapFrom(src => src.PhoneNumber))
+            .ForMember(dest => dest.GroupID,
+                opt => opt.MapFrom(src => src.GroupID))
+            .ForMember(dest => dest.GroupName,
+                opt => opt.MapFrom(src => src.Group.Name))
             .ReverseMap();
 
     }

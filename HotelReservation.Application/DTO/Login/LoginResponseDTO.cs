@@ -8,6 +8,7 @@ public class LoginResponseDTO
     public string Username { get; set; }
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
-
+    public int? GroupID { get; set; }
+    public string GroupName { get; set; }
     public string Token { get; set; }
 }

@@ -8,6 +8,8 @@ public class LoginResponseDTO
     public string LastName { get; set; }
     public string Token { get; set; }
     public string Email { get; set; }
+    public int? GroupID { get; set; }
+    public string GroupName { get; set; }
 
     public string FullName => $"{FirstName} {LastName}";
 }

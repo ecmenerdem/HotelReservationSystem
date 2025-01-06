@@ -6,15 +6,17 @@ using HotelReservation.WebHelper.APIHelper.Request;
 using HotelReservation.WebHelper.Const;
 using HotelReservation.WebHelper.DTO.Account.Login;
 using HotelReservation.WebHelper.SessionHelper;
+using HotelReservation.WebUI.Areas.AdminPanel.Filters;
 using Microsoft.AspNetCore.Connections;
 using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.AspNetCore.Mvc.Filters;
 using RestSharp;
 
 namespace HotelReservation.WebUI.Areas.AdminPanel.Controllers
 {
 
     [Area("AdminPanel")]
-    [Route("[action]")]
+    //[Route("[action]")]
 
     public class AccountController : Controller
     {
@@ -25,9 +27,11 @@ namespace HotelReservation.WebUI.Areas.AdminPanel.Controllers
             _apiService = apiService;
         }
 
-        [HttpGet("/AdminAccount/Login")]
-        public IActionResult LoginPage()
+        [HttpGet("/Admin/Login")]
+        public IActionResult LoginPage(string? erroMessage)
         {
+            ViewData["LoginError"] = erroMessage;
+            ViewData["LoginError"] = HttpContext.Items["LoginError"];
             return View();
         }
 
@@ -65,5 +69,6 @@ namespace HotelReservation.WebUI.Areas.AdminPanel.Controllers
         }
 
     }
+
 
 }

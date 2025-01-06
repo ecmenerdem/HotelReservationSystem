@@ -34,11 +34,13 @@ namespace HotelReservation.Infrastructure.Persistence.EFCore.Context
         }
 
         // DbSet'ler: Veritabanında tabloları temsil eder.
-        public DbSet<Hotel> Hotels { get; set; }
-        public DbSet<Room> Rooms { get; set; }
-        public DbSet<Reservation> Reservations { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<RoomImage> RoomImages { get; set; }
+        public virtual DbSet<Hotel> Hotels { get; set; }
+        public virtual DbSet<Room> Rooms { get; set; }
+        public virtual DbSet<Reservation> Reservations { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<RoomImage> RoomImages { get; set; }
+        public virtual DbSet<UserGroup> UserGroup { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -50,6 +52,8 @@ namespace HotelReservation.Infrastructure.Persistence.EFCore.Context
             modelBuilder.ApplyConfiguration(new ReservationMap());
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new RoomImageMap());
+            modelBuilder.ApplyConfiguration(new UserGroupMap());
+
         }
     }
 }

@@ -36,6 +36,8 @@ namespace HotelReservation.Infrastructure.Persistence.EFCore.Mapping
 
             builder.Property(u => u.PhoneNumber)
                 .HasMaxLength(20);
+
+            builder.HasOne(q => q.Group).WithMany(q => q.Users).HasForeignKey(q => q.GroupID).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

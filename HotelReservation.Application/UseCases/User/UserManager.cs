@@ -114,7 +114,7 @@ namespace HotelReservation.Application.UseCases.User
         public async Task<ApiResult<LoginResponseDTO>> LoginAsync(LoginRequestDTO loginRequestDTO)
         {
             await _validator.ValidateAsync(loginRequestDTO, typeof(LoginValidator));
-            var user = await _uow.UserRepository.GetAsync(x => x.Username == loginRequestDTO.KullaniciAdi);
+            var user = await _uow.UserRepository.GetAsync(x => x.Username == loginRequestDTO.KullaniciAdi, "Group");
 
             if (user == null || !_passwordHasher.VerifyPassword(user.Password, loginRequestDTO.Sifre))
             {

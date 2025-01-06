@@ -20,9 +20,12 @@ namespace HotelReservation.Domain.Entities
         public string Password { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
+        public int? GroupID { get; set; }
 
         // Navigation Property
         public virtual IEnumerable<Reservation> Reservations { get; set; }
+        public virtual UserGroup Group { get; set; }
+
 
         // Kullanıcının tam adını almak için yardımcı bir property
         public string FullName => $"{FirstName} {LastName}";
