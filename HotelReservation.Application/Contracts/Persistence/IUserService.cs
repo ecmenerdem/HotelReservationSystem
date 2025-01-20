@@ -1,4 +1,5 @@
-﻿using HotelReservation.Application.DTO.User;
+﻿using HotelReservation.Application.DTO.Login;
+using HotelReservation.Application.DTO.User;
 using HotelReservation.Application.Result;
 
 namespace HotelReservation.Application.Contracts.Persistence

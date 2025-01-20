@@ -8,9 +8,9 @@ namespace HotelReservation.WebHelper.APIHelper.Request
 {
     public class ApiRequest<TRequest>
     {
-        public TRequest? Body { get; set; } = default;
+        public TRequest Body { get; set; } = default;
         public string URL { get; set; }
         public HttpMethod Method { get; set; }
-        public string? Token { get; set; }
+        public string Token { get; set; }
     }
 }

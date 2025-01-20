@@ -1,5 +1,5 @@
 using FluentValidation;
-using HotelReservation.Application.DTO.User;
+using HotelReservation.Application.DTO.Login;
 using Microsoft.AspNetCore.Identity.Data;
 
 namespace HotelReservation.Application.UseCases.User.Validation;

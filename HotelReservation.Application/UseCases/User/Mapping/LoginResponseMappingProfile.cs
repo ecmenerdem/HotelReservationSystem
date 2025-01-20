@@ -1,5 +1,5 @@
 using AutoMapper;
-using HotelReservation.Application.DTO.User;
+using HotelReservation.Application.DTO.Login;
 
 namespace HotelReservation.Application.UseCases.User.Mapping;
 

@@ -1,4 +1,4 @@
-namespace HotelReservation.Application.DTO.User;
+namespace HotelReservation.Application.DTO.Login;
 
 public class LoginRequestDTO
 {

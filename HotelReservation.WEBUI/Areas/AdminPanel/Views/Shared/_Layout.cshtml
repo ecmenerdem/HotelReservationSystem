@@ -5,26 +5,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AdminLTE 3 | Blank Page</title>
-
     <!-- jQuery -->
     <script src="/AdminUI/plugins/jquery/jquery.min.js"></script>
-
-
+    <!-- Bootstrap 4 -->
+    <script src="/AdminUI/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
+    <!-- Select2 -->
+    <link rel="stylesheet" href="/AdminUI/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/AdminUI/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/AdminUI/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/AdminUI/dist/css/adminlte.min.css">
-    <link rel="stylesheet" href="/AdminUI/plugins/ekko-lightbox/ekko-lightbox.css">
-
-    <!-- DataTables -->
-    <link rel="stylesheet" href="/AdminUI/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="/AdminUI/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="/AdminUI/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-
-    <link href="~/adminui/plugins/sweetalert2/sweetalert2.css" rel="stylesheet" />
-
 </head>
 <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
@@ -46,6 +41,28 @@
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
+                <!-- Navbar Search -->
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <div class="navbar-search-block">
+                        <form class="form-inline">
+                            <div class="input-group input-group-sm">
+                                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+
                 <!-- Messages Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
@@ -149,7 +166,7 @@
             <!-- Brand Logo -->
             <a href="/AdminUI/index3.html" class="brand-link">
                 <img src="/AdminUI/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">SHOPPING 234</span>
+                <span class="brand-text font-weight-light">AdminLTE 3</span>
             </a>
 
             <!-- Sidebar -->
@@ -160,10 +177,9 @@
                         <img src="/AdminUI/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">@SessionManager.loginResponseDTO.FullName.ToUpper()</a>
+                        <a href="#" class="d-block">@SessionManager.loginResponseDTO.FullName</a>
                     </div>
                 </div>
-
 
 
                 <!-- Sidebar Menu -->
@@ -173,30 +189,20 @@
                              with font-awesome or any other icon font library -->
                         <li class="nav-item">
                             <a href="/Admin/Anasayfa" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>Anasayfa</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="/Admin/Kategori" class="nav-link">
-                                <i class="nav-icon fas fa-list"></i>
-                                <p>Kategoriler</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/Admin/Urunler" class="nav-link">
-                                <i class="nav-icon fas fa-list"></i>
-                                <p>Ürünler</p>
+                                <i class="nav-icon fas fa-home"></i>
+                                <p>
+                                    Anasayfa
+                                </p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="/Admin/Kullanicilar" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>Kullancılar</p>
+                                <i class="nav-icon fas fa-home"></i>
+                                <p>
+                                    Kullanıcılar
+                                </p>
                             </a>
                         </li>
-
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -206,6 +212,9 @@
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
+
+
+
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <div class="container-fluid">
@@ -220,8 +229,9 @@
 
             <!-- Main content -->
             <section class="content">
-                <!--RAZOR-->
+
                 @RenderBody()
+
 
             </section>
             <!-- /.content -->
@@ -242,11 +252,8 @@
         <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
-    <!-- Bootstrap 4 -->
-    <script src="/AdminUI/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
-    <!-- DataTables  & Plugins -->
     <script src="/AdminUI/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="/AdminUI/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
     <script src="/AdminUI/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
@@ -259,16 +266,14 @@
     <script src="/AdminUI/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="/AdminUI/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="/AdminUI/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    <script src="/AdminUI/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+
+    <script src="/AdminUI/plugins/select2/js/select2.full.min.js"></script>
 
 
-    <script src="~/adminui/plugins/sweetalert2/sweetalert2.js"></script>
     <!-- AdminLTE App -->
-    <script src="/AdminUI/dist/js/adminlte.min.js"></script>
+    <script src="/AdminUI/dist/js/adminlte.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="/AdminUI/dist/js/demo.js"></script>
-    <script src="/AdminUI/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
-
 </body>
 </html>
 <script>

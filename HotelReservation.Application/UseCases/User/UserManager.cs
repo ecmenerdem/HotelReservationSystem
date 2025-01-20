@@ -9,6 +9,7 @@ using System.Security.Claims;
 using HotelReservation.Application.Contracts.Validation;
 using HotelReservation.Application.Result;
 using HotelReservation.Application.UseCases.User.Validation;
+using HotelReservation.Application.DTO.Login;
 
 namespace HotelReservation.Application.UseCases.User
 {

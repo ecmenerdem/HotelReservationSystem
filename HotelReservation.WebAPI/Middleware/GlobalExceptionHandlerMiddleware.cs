@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json;
-using HotelReservation.Application.DTO.User;
+using HotelReservation.Application.DTO.Login;
 using HotelReservation.Application.Result;
 using HotelReservation.Domain.Const;
 using HotelReservation.Domain.Exceptions;

@@ -27,6 +27,8 @@ namespace HotelReservation.Infrastructure.Persistence.Repositories.EntityFramewo
             ReservationRepository = new EfReservationRepository(_context);
             UserRepository = new EfUserRepository(_context);
             RoomImageRepository = new EfRoomImageRepository(_context);
+            UserGroupRepository = new EfUserGroupRepository(_context);
+
             _accessor = accessor;
         }
 
@@ -35,6 +37,8 @@ namespace HotelReservation.Infrastructure.Persistence.Repositories.EntityFramewo
       public IRoomRepository RoomRepository { get; }
       public IReservationRepository ReservationRepository { get; }
       public IRoomImageRepository RoomImageRepository { get; }
+      public IUserGroupRepository UserGroupRepository { get; }
+
 
         public async Task<int> SaveAsync()
         {

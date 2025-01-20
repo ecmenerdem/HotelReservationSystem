@@ -1,8 +1,9 @@
 using HotelReservation.WebHelper;
-using HotelReservation.WebHelper.APIHelper.Contract;
 using HotelReservation.WebHelper.APIHelper.Manager;
+using HotelReservation.WebHelper.APIHelper.Service;
+using HotelReservation.WebUI.Middleware;
 
-namespace HotelReservationSystem.WEBUI
+namespace HotelReservation.WebUI
 {
     public class Program
     {
@@ -30,6 +31,10 @@ namespace HotelReservationSystem.WEBUI
             app.UseSession();
             var httpContextAccessor = app.Services.GetRequiredService<IHttpContextAccessor>();
             AppHttpContext.Configure(httpContextAccessor);
+
+
+            app.UseGlobalExceptionHandlerMiddleware();
+            app.UseSessionNullCheckMiddleware();
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {

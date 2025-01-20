@@ -8,6 +8,7 @@ using HotelReservation.Application.Contracts.Security;
 using HotelReservation.Application.Contracts.Validation;
 using HotelReservation.Application.UseCases.User;
 using HotelReservation.Application.UseCases.User.Validation;
+using HotelReservation.Application.UseCases.UserGroup;
 using HotelReservation.Domain.Repositories.DataManagement;
 using HotelReservation.Infrastructure.HealthCheck;
 using HotelReservation.Infrastructure.Persistence.EFCore.Context;
@@ -40,6 +41,7 @@ namespace HotelReservation.WebAPI
             builder.Services.AddDbContext<HotelReservationAPIContext>();
             builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
             builder.Services.AddScoped<IUserService, UserManager>();
+            builder.Services.AddScoped<IUserGroupService, UserGroupManager>();
             builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
             builder.Services.AddScoped<ITokenService, TokenService>();
             builder.Services.AddScoped<IGenericValidator, FluentValidator>();

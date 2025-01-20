@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Text.Json;
-using HotelReservation.WebHelper.APIHelper.Contract;
 using HotelReservation.WebHelper.APIHelper.Request;
 using HotelReservation.WebHelper.Const;
 using HotelReservation.WebHelper.DTO.Account.Login;
@@ -11,6 +10,7 @@ using Microsoft.AspNetCore.Connections;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc.Filters;
 using RestSharp;
+using HotelReservation.WebHelper.APIHelper.Service;
 
 namespace HotelReservation.WebUI.Areas.AdminPanel.Controllers
 {
@@ -58,6 +58,8 @@ namespace HotelReservation.WebUI.Areas.AdminPanel.Controllers
             {
 
                 SessionManager.loginResponseDTO = response.Data;
+                SessionManager.Token = response.Data?.Token;
+
                 return RedirectToAction("Index", "Home");
             }
         }

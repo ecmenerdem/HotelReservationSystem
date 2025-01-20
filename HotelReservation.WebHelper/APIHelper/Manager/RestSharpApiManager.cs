@@ -1,5 +1,4 @@
-﻿using HotelReservation.WebHelper.APIHelper.Contract;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +8,7 @@ using HotelReservation.WebHelper.APIHelper.Request;
 using HotelReservation.WebHelper.APIHelper.Result;
 using RestSharp;
 using HotelReservation.WebHelper.Const;
+using HotelReservation.WebHelper.APIHelper.Service;
 
 namespace HotelReservation.WebHelper.APIHelper.Manager
 {

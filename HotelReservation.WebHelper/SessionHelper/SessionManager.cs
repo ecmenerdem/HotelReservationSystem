@@ -14,5 +14,19 @@ namespace HotelReservation.WebHelper.SessionHelper
             get => AppHttpContext.Current.Session.GetObject<LoginResponseDTO>("LoginResponseDTO");
             set => AppHttpContext.Current.Session.SetObject("LoginResponseDTO", value);
         }
+
+        public static string ExceptionMessage
+        {
+            get => AppHttpContext.Current.Session.GetObject<string>("exceptionMessage");
+            set => AppHttpContext.Current.Session.SetObject("exceptionMessage", value);
+
+        }
+
+        public static string Token
+        {
+            get => AppHttpContext.Current.Session.GetObject<string>("Token");
+            set => AppHttpContext.Current.Session.SetObject("Token", value);
+
+        }
     }
 }

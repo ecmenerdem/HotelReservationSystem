@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using HotelReservation.Application.Contracts.Persistence;
+using HotelReservation.Application.DTO.Login;
 using HotelReservation.Application.DTO.User;
 using HotelReservation.Application.Result;
 using HotelReservation.Domain.Exceptions;

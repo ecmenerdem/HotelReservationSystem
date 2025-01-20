@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using HotelReservation.WebHelper.APIHelper.Request;
 using HotelReservation.WebHelper.APIHelper.Result;
 
-namespace HotelReservation.WebHelper.APIHelper.Contract
+namespace HotelReservation.WebHelper.APIHelper.Service
 {
     public interface IApiService
     {
